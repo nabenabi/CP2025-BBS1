@@ -87,6 +87,21 @@ function createPost(author, content) {
 
     // この下の行を消して、投稿処理を記述
     console.log('ボタンが押されました')
+    const db = firebase.database();
+    const postsRef = db.ref('posts');
+    const sending = postsRef.push();
+    sending.set({
+        author : author,
+        content : content,
+        timestamp: Date.now()
+        })
+        .then(() => {
+            console.log("成功");
+            console.log("key:", sending.key);
+        })
+        .catch(()=>{
+            console.log("失敗");
+        })
     // この上の行を消して投稿処理を記述
     // 行末に 「;」 を付けないこと
     .then(() => {
